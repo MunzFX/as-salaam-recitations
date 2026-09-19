@@ -1,0 +1,1 @@
+Surah metadata fetched from https://api.alquran.cloud/v1/surah on 2026-09-17. 114 records; 6,236 ayahs. Source names preserved; URL aliases normalized. Classifications follow this dataset and can be reviewed in admin. No Quran audio copied.

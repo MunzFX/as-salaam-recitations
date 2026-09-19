@@ -1,0 +1,62 @@
+[
+  {
+    "path": "assets/world/journey-hq-01.mp4",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/a6180843-a9d6-4417-b633-22f941c77b73.mp4",
+    "sha256": "8662047873f5db4c511ff3fd0f395d37d341f6816155845fdaeb53e3834969ca"
+  },
+  {
+    "path": "assets/world/journey-hq-01-mobile.mp4",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/f12a56ed-f96a-4c6d-9750-3a6185d74e59.mp4",
+    "sha256": "8ef457da8271c7d3b9d93773520003de0e72c4c6755dfe7efad20f4fd1762fe7"
+  },
+  {
+    "path": "assets/world/journey-hq-02.mp4",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/625937a8-0ad9-4911-82a7-558cd6111da5.mp4",
+    "sha256": "bd32540ca523dfe78fc7312e05f216f6d3a87d095f9781df2fd10ca7e1066095"
+  },
+  {
+    "path": "assets/world/journey-hq-02-mobile.mp4",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/726f06a8-e630-490f-900f-f07ec2a731df.mp4",
+    "sha256": "512ad1b0e07568bf80e79c3f9e3f840d1a86dda0050d02ab1f5d52dda00c1b07"
+  },
+  {
+    "path": "assets/world/journey-hq-03.mp4",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/caaaa556-aaf0-4eca-9aef-3571eea8093b.mp4",
+    "sha256": "8c99782f669a60d3edaecc63c2d5dc05a45a63efe31eab3f9d72232fe3cb4e00"
+  },
+  {
+    "path": "assets/world/journey-hq-03-mobile.mp4",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/d2e1a80e-5681-4537-81a7-edc6c01de208.mp4",
+    "sha256": "50bdbf0f0cea28e01871dd239d5479627a6d38efc7ea54ac75caf4f9bc752774"
+  },
+  {
+    "path": "assets/world/journey-hq-04.mp4",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/6a6ece01-c376-496e-9c1a-ee6b7ae87e54.mp4",
+    "sha256": "b7697ab29ad8da1186aadb13aeda316c62f87a67a32017c267ce6f34390b2a00"
+  },
+  {
+    "path": "assets/world/journey-hq-04-mobile.mp4",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/f02dc2d1-99f9-403a-a6d5-f5a83ca9947c.mp4",
+    "sha256": "211663851b88c4aea3bf006c0de83bf08f1d100519d5369704ba5bd87f319219"
+  },
+  {
+    "path": "assets/world/journey-hq-05.mp4",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/f1cdb662-24c3-41dc-998a-0b758cc54dc6.mp4",
+    "sha256": "685752eebbb681a3a3d6fa6e976e29f67679f4a3c8427e3b943d396b3dd9c284"
+  },
+  {
+    "path": "assets/world/journey-hq-05-mobile.mp4",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/946b661b-348f-4670-81e3-f658472dc83f.mp4",
+    "sha256": "689ecf36e6825b059e439f3a9a4f3fb14ce61f416e8bdaa5fe71f8ccb594c17b"
+  },
+  {
+    "path": "assets/world/journey-hq-06.mp4",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/2f077997-96db-48d0-81c1-617fce1eaaad.mp4",
+    "sha256": "c3e27385cff52b46779420e264a71d8b99c524397c725ec747f754559a060f54"
+  },
+  {
+    "path": "assets/world/journey-hq-06-mobile.mp4",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/e891e823-1c37-4f8f-a70d-083fd8a499ed.mp4",
+    "sha256": "516ef68440a4a5b691e3c108e1ba5f4e288e4a1092ec65a224637e31480a2744"
+  }
+]

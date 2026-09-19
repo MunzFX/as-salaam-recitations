@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "as-salaam-local-preview",
+  "main": "dist/server/server.js",
+  "compatibility_date": "2026-09-17",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {"directory": "./dist/client", "binding": "ASSETS", "not_found_handling": "none"},
+  "vars": {"HF_ENV": "dev", "APP_SLUG": "as-salaam-local-preview"},
+  "d1_databases": [{"binding":"DB","database_name":"as-salaam-preview-db","database_id":"00000000-0000-0000-0000-000000000001","migrations_dir":"migrations"}],
+  "r2_buckets": [{"binding":"STORAGE","bucket_name":"as-salaam-preview-audio"}]
+}
+

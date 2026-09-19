@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "surahs": 114,
+  "ayahs": 6236,
+  "checks": [
+    "anonymous admin blocked",
+    "session cookies",
+    "login",
+    "bad audio rejected",
+    "upload",
+    "draft isolation",
+    "publish",
+    "audio range seek",
+    "download",
+    "rights gate",
+    "English Arabic number search",
+    "filters",
+    "direct URL",
+    "play pause seek volume speed repeat",
+    "previous next database order",
+    "persistent playback",
+    "WebGL scroll and reverse",
+    "no background video",
+    "admin auto metadata",
+    "UI upload progress",
+    "mobile overflow",
+    "reduced motion",
+    "unpublish",
+    "delete",
+    "logout"
+  ],
+  "browserErrors": []
+}

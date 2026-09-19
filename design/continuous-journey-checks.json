@@ -1,0 +1,118 @@
+{
+  "source": "Five existing Higgsfield clips; no new generation",
+  "fps": 24,
+  "master_frames": 551,
+  "desktop_resolution": [
+    1920,
+    1080
+  ],
+  "mobile_resolution": [
+    720,
+    1280
+  ],
+  "quality_priority": "User requested full video quality over the previous bandwidth reduction",
+  "seams": [
+    {
+      "chapter": 2,
+      "variant": "desktop",
+      "mean_rgb_difference": 0.0
+    },
+    {
+      "chapter": 2,
+      "variant": "-mobile",
+      "mean_rgb_difference": 0.0
+    },
+    {
+      "chapter": 3,
+      "variant": "desktop",
+      "mean_rgb_difference": 0.0
+    },
+    {
+      "chapter": 3,
+      "variant": "-mobile",
+      "mean_rgb_difference": 0.0
+    },
+    {
+      "chapter": 4,
+      "variant": "desktop",
+      "mean_rgb_difference": 0.0
+    },
+    {
+      "chapter": 4,
+      "variant": "-mobile",
+      "mean_rgb_difference": 0.0
+    },
+    {
+      "chapter": 5,
+      "variant": "desktop",
+      "mean_rgb_difference": 0.0
+    },
+    {
+      "chapter": 5,
+      "variant": "-mobile",
+      "mean_rgb_difference": 0.0
+    },
+    {
+      "chapter": 6,
+      "variant": "desktop",
+      "mean_rgb_difference": 0.0
+    },
+    {
+      "chapter": 6,
+      "variant": "-mobile",
+      "mean_rgb_difference": 0.0
+    }
+  ],
+  "chapters": [
+    {
+      "chapter": 1,
+      "start_frame": 0,
+      "end_frame": 108,
+      "scroll": 2.25,
+      "desktop_bytes": 16996742,
+      "mobile_bytes": 6342821
+    },
+    {
+      "chapter": 2,
+      "start_frame": 108,
+      "end_frame": 216,
+      "scroll": 2.25,
+      "desktop_bytes": 22993481,
+      "mobile_bytes": 9577179
+    },
+    {
+      "chapter": 3,
+      "start_frame": 216,
+      "end_frame": 324,
+      "scroll": 2.25,
+      "desktop_bytes": 17545289,
+      "mobile_bytes": 9094974
+    },
+    {
+      "chapter": 4,
+      "start_frame": 324,
+      "end_frame": 432,
+      "scroll": 2.25,
+      "desktop_bytes": 17715277,
+      "mobile_bytes": 8265819
+    },
+    {
+      "chapter": 5,
+      "start_frame": 432,
+      "end_frame": 492,
+      "scroll": 1.25,
+      "desktop_bytes": 9250208,
+      "mobile_bytes": 3757537
+    },
+    {
+      "chapter": 6,
+      "start_frame": 492,
+      "end_frame": 550,
+      "scroll": 2.208333333333333,
+      "desktop_bytes": 8437301,
+      "mobile_bytes": 3921380
+    }
+  ],
+  "desktop_video_bytes": 92938298,
+  "mobile_video_bytes": 40959710
+}

@@ -1,0 +1,1 @@
+import {createFileRoute} from '@tanstack/react-router';import {handle} from '../../../lib/archive.server';export const Route=createFileRoute('/api/archive/$')({server:{handlers:{GET:({request})=>handle(request),POST:({request})=>handle(request)}}});

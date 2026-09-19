@@ -1,0 +1,25 @@
+{
+  "provider": "Higgsfield",
+  "plates": [
+    "https://d8j0ntlcm91z4.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/hf_20260917_153300_bfe6120c-1081-41f6-b147-33c5cf2fb3df.png",
+    "https://d8j0ntlcm91z4.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/hf_20260917_153300_e3744bd8-653d-4be0-862f-7dd81b1cb34d.png",
+    "https://d8j0ntlcm91z4.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/hf_20260917_153259_bf5d9cf7-60b6-4f5d-904e-81558fde0add.png",
+    "https://d8j0ntlcm91z4.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/hf_20260917_153259_408db8e4-ecef-42c6-a14b-2c89705b367c.png",
+    "https://d8j0ntlcm91z4.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/hf_20260917_153300_814e2126-514a-4ec2-b82e-022fdebf1fd3.png",
+    "https://d8j0ntlcm91z4.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/hf_20260917_153259_5162f6aa-4e05-46b8-ab8c-aed14fe59a38.png"
+  ],
+  "transitions": [
+    "https://d8j0ntlcm91z4.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/hf_20260917_153450_8631c91c-df17-4d6a-901a-56fd87052dbf.mp4",
+    "https://d8j0ntlcm91z4.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/hf_20260917_153450_f25d4bfb-2f0d-4d0d-bd53-ff5c27360d19.mp4",
+    "https://d8j0ntlcm91z4.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/hf_20260917_153450_84343dd2-509b-40b7-9ce0-fbe7f74e14c3.mp4",
+    "https://d8j0ntlcm91z4.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/hf_20260917_153450_0d5cfed1-4716-403d-83c8-78f870cda2df.mp4",
+    "https://d8j0ntlcm91z4.cloudfront.net/user_3D4BP6yscedGF4xhnbe1AIsZRra/hf_20260917_153450_77c83a91-7867-4d8d-8d6f-f8015c522d18.mp4"
+  ],
+  "desktop_video_bytes": 92938298,
+  "mobile_video_bytes": 40959710,
+  "desktop_first_frame_posters": "Lossless WebP; decoded pixels verified equal to extracted PNG frames",
+  "preview_status": "Public release authorized by user",
+  "active_media": "journey-hq-01 through journey-hq-06",
+  "continuity_checks": "continuous-journey-checks.json: all 10 desktop/mobile joins have identical decoded boundary pixels",
+  "branding": "Brown, bronze, cream and gold; no green interface accents"
+}

@@ -1,0 +1,1 @@
+import {createFileRoute} from '@tanstack/react-router';import {Library} from '../components/archive/library';export const Route=createFileRoute('/recitations')({head:()=>({meta:[{title:'Recitations | As-Salaam Institute'}],links:[{rel:'canonical',href:'https://as-salaam-recitations.higgsfield.app/recitations'}]}),component:()=> <Library recordingsOnly/>});

@@ -1,0 +1,1 @@
+import {createFileRoute} from '@tanstack/react-router';import {Admin} from '../../../components/archive/admin';export const Route=createFileRoute('/admin/recordings/new')({component:()=> <Admin start="Upload Recording"/>});
