@@ -640,6 +640,44 @@ export function ScrollScrub({
           })}
         </div>
 
+        {/* Watery warp: SVG displacement applied to the film itself while
+            scrolling (driven by the Journey controller). Chrome/Firefox
+            render the turbulence refraction; every browser gets the
+            velocity-driven spring transform on the media. */}
+        <svg
+          aria-hidden="true"
+          className="scroll-scrub__liquid"
+          data-scroll-scrub-liquid=""
+        >
+          <defs>
+            <filter
+              id="as-salaam-liquid"
+              x="-40%"
+              y="-40%"
+              width="180%"
+              height="180%"
+              colorInterpolationFilters="sRGB"
+            >
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.004 0.09"
+                numOctaves="2"
+                seed="11"
+                result="liquid-noise"
+                data-liquid-turbulence=""
+              />
+              <feDisplacementMap
+                in="SourceGraphic"
+                in2="liquid-noise"
+                scale="0"
+                xChannelSelector="R"
+                yChannelSelector="G"
+                data-liquid-map=""
+              />
+            </filter>
+          </defs>
+        </svg>
+
         <div aria-hidden="true" className="scroll-scrub__progress">
           <span />
         </div>
