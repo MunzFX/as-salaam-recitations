@@ -66,7 +66,8 @@ export function Journey() {
     let lastY = window.scrollY;
     let lastT = performance.now();
     let velocity = 0; // smoothed |scroll delta| in px per frame
-    let energy = 0; // spring value that chases velocity
+    let energy = 0; // spring position (0..1.1, may overshoot briefly)
+    let spring = 0; // spring velocity
     let phase = 0;
 
     const measure = () => {
@@ -97,39 +98,48 @@ export function Journey() {
     const tick = (now: number) => {
       const dt = Math.min(64, Math.max(1, now - lastT));
       lastT = now;
+      const frameDt = dt / 16;
       const y = window.scrollY;
-      velocity += ((Math.abs(y - lastY) - velocity) * 0.35 * dt) / 16;
+      velocity += ((Math.abs(y - lastY) - velocity) * 0.35 * frameDt);
       lastY = y;
 
-      // Spring: energy chases velocity up and eases back to zero.
-      const target = Math.min(1, velocity / 26);
-      energy += (target - energy) * Math.min(1, 0.16 * (dt / 16));
+      // Damped spring: energy chases velocity up fast and settles back
+      // with a smooth ease and a hint of overshoot — no hard clamping,
+      // so the wave breathes like the reference site.
+      const target = Math.min(1.1, velocity / 18);
+      const stiffness = 0.34 * frameDt;
+      const damping = Math.pow(0.82, frameDt);
+      spring += (target - energy) * stiffness;
+      spring *= damping;
+      energy += spring;
 
       const k = seamK(y);
-      const amplitude = energy * (0.25 + 0.75 * k);
+      const amplitude = Math.min(1.1, energy * (0.3 + 0.85 * k));
       const active = amplitude > 0.015;
 
       stage.toggleAttribute("data-liquid", active);
       if (!active) {
         map.setAttribute("scale", "0");
+        turbulence.setAttribute("numOctaves", "2");
         media.style.transform = "";
       } else {
         const viewport = window.innerWidth;
-        const maxScale = viewport <= 600 ? 34 : 62;
+        const maxScale = viewport <= 600 ? 46 : 96;
         map.setAttribute("scale", String((amplitude * maxScale).toFixed(2)));
+        turbulence.setAttribute("numOctaves", viewport <= 600 ? "2" : "3");
 
         // Drift the turbulence so the water keeps flowing while displaced.
-        phase += dt * 0.00045 * (0.4 + amplitude);
-        const bfX = (0.004 + 0.0028 * Math.sin(phase)).toFixed(4);
-        const bfY = (0.09 + 0.04 * Math.sin(phase * 1.7)).toFixed(4);
+        phase += dt * 0.00055 * (0.4 + amplitude);
+        const bfX = (0.004 + 0.0032 * Math.sin(phase)).toFixed(4);
+        const bfY = (0.09 + 0.045 * Math.sin(phase * 1.7)).toFixed(4);
         turbulence.setAttribute("baseFrequency", `${bfX} ${bfY}`);
 
         // Liquid stretch along the scroll axis plus a horizontal wobble.
         // A slight overall zoom keeps the film edge-to-edge during the
         // lateral shift so the stage background never peeks through.
-        const wobble = Math.sin(now / 85) * amplitude * 6;
-        const zoom = 1 + amplitude * 0.022;
-        media.style.transform = `translate3d(${wobble.toFixed(2)}px, 0, 0) skewX(${(Math.sin(now / 130) * amplitude * 1.1).toFixed(3)}deg) scale(${zoom.toFixed(4)}) scaleY(${(1 + amplitude * 0.02).toFixed(4)})`;
+        const wobble = Math.sin(now / 80) * amplitude * 10;
+        const zoom = 1 + amplitude * 0.03;
+        media.style.transform = `translate3d(${wobble.toFixed(2)}px, ${(Math.sin(now / 140) * amplitude * 4).toFixed(2)}px, 0) skewX(${(Math.sin(now / 125) * amplitude * 1.8).toFixed(3)}deg) scale(${zoom.toFixed(4)}) scaleY(${(1 + amplitude * 0.028).toFixed(4)})`;
       }
 
       frame = window.requestAnimationFrame(tick);
