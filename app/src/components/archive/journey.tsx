@@ -14,36 +14,36 @@ export function Journey() {
     const media = gsap.matchMedia();
     media.add("(prefers-reduced-motion: no-preference)", () => {
       const ctx = gsap.context(() => {
-        root.current?.querySelectorAll<HTMLElement>(".chapter-content").forEach((node, index) => {
-          if (!index) return;
-          gsap.fromTo(
-            node,
-            { y: 35, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              ease: "none",
-              scrollTrigger: {
-                trigger: node.closest(".scroll-scrub__chapter"),
-                start: "top 70%",
-                end: "top 15%",
-                scrub: 0.4,
+        root.current
+          ?.querySelectorAll<HTMLElement>(".chapter-content")
+          .forEach((node, index) => {
+            if (!index) return;
+            gsap.fromTo(
+              node,
+              { y: 35, opacity: 0 },
+              {
+                y: 0,
+                opacity: 1,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: node.closest(".scroll-scrub__chapter"),
+                  start: "top 70%",
+                  end: "top 15%",
+                  scrub: 0.65,
+                },
               },
-            },
-          );
-        });
+            );
+          });
       }, root);
       return () => ctx.revert();
     });
     return () => media.revert();
   }, []);
 
-  // Scroll-driven WATER warp at the chapter seams: the film itself is
-  // displaced by an SVG turbulence filter whose strength follows scroll
-  // VELOCITY with a spring — fast scroll = deep liquid stretch, and it
-  // eases back to zero when scrolling stops (like the reference site).
-  // Peaks at the seams between chapters. Purely visual: it never reads
-  // or alters scrub timing.
+  // Scroll-driven water/glitch warp at chapter seams. The SVG displacement
+  // follows signed scroll velocity through a damped spring, while the noise
+  // phase is derived from scroll position. That keeps the transition smooth,
+  // reversible, and still on the exact same film/playhead timeline.
   useEffect(() => {
     const host = root.current;
     const stage = host?.querySelector<HTMLElement>(".scroll-scrub");
@@ -65,89 +65,114 @@ export function Journey() {
     let boundaries: number[] = [];
     let lastY = window.scrollY;
     let lastT = performance.now();
-    let velocity = 0; // smoothed |scroll delta| in px per frame
-    let energy = 0; // spring position (0..1.1, may overshoot briefly)
-    let spring = 0; // spring velocity
-    let phase = 0;
+    let scrollVelocity = 0;
+    let energy = 0;
+    let springVelocity = 0;
+    let liquidActive = false;
 
     const measure = () => {
       boundaries = Array.from(
         host.querySelectorAll<HTMLElement>(".scroll-scrub__chapter"),
       )
-        .slice(0, -1) // seams sit between chapters, not after the last one
+        .slice(0, -1)
         .map((band) => band.getBoundingClientRect().bottom + window.scrollY);
     };
 
-    const seamK = (y: number) => {
+    const seamStrength = (y: number) => {
       const half = window.innerHeight * 0.9;
-      let k = 0;
+      let strength = 0;
       for (const boundary of boundaries) {
-        const d = Math.abs(y - boundary);
-        if (d >= half) {
-          continue;
-        }
-        const t = 1 - d / half;
-        const eased = t * t * (3 - 2 * t);
-        if (eased > k) {
-          k = eased;
-        }
+        const distance = Math.abs(y - boundary);
+        if (distance >= half) continue;
+        const proximity = 1 - distance / half;
+        const eased = proximity * proximity * (3 - 2 * proximity);
+        strength = Math.max(strength, eased);
       }
-      return k;
+      return strength;
+    };
+
+    const resetVisuals = () => {
+      map.setAttribute("scale", "0");
+      turbulence.setAttribute("numOctaves", "2");
+      media.style.transform = "";
     };
 
     const tick = (now: number) => {
-      const dt = Math.min(64, Math.max(1, now - lastT));
+      const seconds = Math.min(0.05, Math.max(0.001, (now - lastT) / 1000));
       lastT = now;
-      const frameDt = dt / 16;
+
       const y = window.scrollY;
-      velocity += ((Math.abs(y - lastY) - velocity) * 0.35 * frameDt);
+      const instantVelocity = (y - lastY) / seconds;
       lastY = y;
 
-      // Damped spring: energy chases velocity up fast and settles back
-      // with a smooth ease and a hint of overshoot — no hard clamping,
-      // so the wave breathes like the reference site.
-      const target = Math.min(1.1, velocity / 18);
-      const stiffness = 0.34 * frameDt;
-      const damping = Math.pow(0.82, frameDt);
-      spring += (target - energy) * stiffness;
-      spring *= damping;
-      energy += spring;
+      // Normalize wheel, trackpad, touch and scrollbar input into one smooth
+      // signed velocity. The exponential blend is stable at any refresh rate.
+      const velocityBlend = 1 - Math.exp(-seconds * 18);
+      scrollVelocity += (instantVelocity - scrollVelocity) * velocityBlend;
 
-      const k = seamK(y);
-      const amplitude = Math.min(1.1, energy * (0.3 + 0.85 * k));
-      const active = amplitude > 0.015;
+      // Critically damped-style spring: fast attack, gentle release, no jitter
+      // when scrolling stops. A small overshoot gives the wave an organic tail.
+      const target = Math.min(1.1, Math.abs(scrollVelocity) / 1600);
+      springVelocity += (target - energy) * 150 * seconds;
+      springVelocity *= Math.exp(-20 * seconds);
+      energy += springVelocity * seconds;
+      if (energy < 0) {
+        energy = 0;
+        springVelocity = 0;
+      } else if (energy > 1.15) {
+        energy = 1.15;
+        springVelocity = Math.min(0, springVelocity);
+      }
 
-      stage.toggleAttribute("data-liquid", active);
-      if (!active) {
-        map.setAttribute("scale", "0");
-        turbulence.setAttribute("numOctaves", "2");
-        media.style.transform = "";
+      const seam = seamStrength(y);
+      const amplitude = energy * (0.22 + 0.98 * seam);
+
+      // Hysteresis avoids rapidly mounting/unmounting the SVG filter around
+      // zero, which otherwise appears as a tiny flash on some browsers.
+      if (!liquidActive && amplitude > 0.012) liquidActive = true;
+      if (liquidActive && amplitude < 0.006) liquidActive = false;
+      stage.toggleAttribute("data-liquid", liquidActive);
+
+      if (!liquidActive) {
+        resetVisuals();
       } else {
-        const viewport = window.innerWidth;
-        const maxScale = viewport <= 600 ? 46 : 96;
+        const mobile = window.innerWidth <= 600;
+        const maxScale = mobile ? 44 : 92;
         map.setAttribute("scale", String((amplitude * maxScale).toFixed(2)));
-        turbulence.setAttribute("numOctaves", viewport <= 600 ? "2" : "3");
+        turbulence.setAttribute("numOctaves", mobile ? "2" : "3");
 
-        // Drift the turbulence so the water keeps flowing while displaced.
-        phase += dt * 0.00055 * (0.4 + amplitude);
-        const bfX = (0.004 + 0.0032 * Math.sin(phase)).toFixed(4);
-        const bfY = (0.09 + 0.045 * Math.sin(phase * 1.7)).toFixed(4);
-        turbulence.setAttribute("baseFrequency", `${bfX} ${bfY}`);
+        // Position-driven phase means reversing the scroll reverses the wave
+        // instead of starting an unrelated time animation.
+        const phase = y * 0.0105;
+        const signedMotion = Math.max(
+          -1,
+          Math.min(1, scrollVelocity / 1400),
+        );
+        const frequencyX =
+          0.0038 + 0.0028 * (0.5 + 0.5 * Math.sin(phase * 0.7));
+        const frequencyY =
+          0.078 + 0.052 * (0.5 + 0.5 * Math.cos(phase * 1.11));
+        turbulence.setAttribute(
+          "baseFrequency",
+          `${frequencyX.toFixed(4)} ${frequencyY.toFixed(4)}`,
+        );
 
-        // Liquid stretch along the scroll axis plus a horizontal wobble.
-        // A slight overall zoom keeps the film edge-to-edge during the
-        // lateral shift so the stage background never peeks through.
-        const wobble = Math.sin(now / 80) * amplitude * 10;
-        const zoom = 1 + amplitude * 0.03;
-        media.style.transform = `translate3d(${wobble.toFixed(2)}px, ${(Math.sin(now / 140) * amplitude * 4).toFixed(2)}px, 0) skewX(${(Math.sin(now / 125) * amplitude * 1.8).toFixed(3)}deg) scale(${zoom.toFixed(4)}) scaleY(${(1 + amplitude * 0.028).toFixed(4)})`;
+        const wobble =
+          (Math.sin(phase * 1.7) * 0.55 + signedMotion * 0.45) *
+          amplitude *
+          12;
+        const rippleY = Math.cos(phase * 1.2) * amplitude * 4;
+        const skew =
+          (Math.sin(phase * 2.2) * 0.9 + signedMotion * 1.6) * amplitude;
+        const zoom = 1 + amplitude * 0.035;
+        const stretch = 1 + amplitude * 0.025;
+        media.style.transform = `translate3d(${wobble.toFixed(2)}px, ${rippleY.toFixed(2)}px, 0) skewX(${skew.toFixed(3)}deg) scale(${zoom.toFixed(4)}) scaleY(${stretch.toFixed(4)})`;
       }
 
       frame = window.requestAnimationFrame(tick);
     };
 
-    const onResize = () => {
-      measure();
-    };
+    const onResize = () => measure();
 
     measure();
     frame = window.requestAnimationFrame(tick);
@@ -159,8 +184,7 @@ export function Journey() {
       window.removeEventListener("resize", onResize);
       window.removeEventListener("orientationchange", onResize);
       stage.removeAttribute("data-liquid");
-      map.setAttribute("scale", "0");
-      media.style.transform = "";
+      resetVisuals();
     };
   }, []);
 
