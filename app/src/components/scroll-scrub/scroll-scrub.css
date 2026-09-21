@@ -280,3 +280,39 @@
     transition: none;
   }
 }
+
+/* ── Scroll-driven watery warp at chapter seams ──────────────────────
+   Applied to the FILM itself (not an overlay): an SVG turbulence
+   displacement filter (Chrome/Firefox) plus a velocity-driven spring
+   transform on the media (all browsers). The Journey controller writes
+   [data-liquid="on"] and drives the feDisplacementMap scale + media
+   transform per frame from scroll velocity. Purely visual — it never
+   reads or alters scrub timing. */
+
+.scroll-scrub__liquid {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.scroll-scrub[data-liquid="on"] .scroll-scrub__media {
+  filter: url(#as-salaam-liquid);
+}
+
+@media (max-width: 600px) {
+  .scroll-scrub[data-liquid="on"] .scroll-scrub__media {
+    filter: url(#as-salaam-liquid);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-scrub__liquid {
+    display: none;
+  }
+
+  .scroll-scrub__media {
+    transform: none !important;
+    filter: none !important;
+  }
+}
